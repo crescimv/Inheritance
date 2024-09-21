@@ -1,8 +1,16 @@
 public class SalaryWorker extends Worker {
     private double annualSalary;
 
-    public SalaryWorker(String IDnum, String firstName, String lastName, String title, int YOB, double hourlyPayRate, double annualSalary) {
-        super(IDnum, firstName, lastName, title, YOB, hourlyPayRate);
+    public SalaryWorker(String ID, String firstName, String lastName, String title, int YOB, double annualSalary) {
+        super(ID, firstName, lastName, title, YOB);
+        this.annualSalary = annualSalary;
+    }
+
+    public double getAnnualSalary() {
+        return annualSalary;
+    }
+
+    public void setAnnualSalary(double annualSalary) {
         this.annualSalary = annualSalary;
     }
 
@@ -13,7 +21,23 @@ public class SalaryWorker extends Worker {
 
     @Override
     public  String displayWeeklyPay(double hoursWorked) {
-        String.format("Total Pay per 1 week out of 52 weeks): %.2f", calculateWeeklyPay(hoursWorked));
-        return "";
+        return String.format("Total Pay per 1 week out of 52 weeks: " + calculateWeeklyPay(hoursWorked));
+    }
+
+    @Override
+    public String toCSV() {
+        return super.toCSV() + "," + annualSalary;
+    }
+
+    @Override
+    public String toXML() {
+        return super.toXML().replace("</person>",
+                "<annualSalary>" + annualSalary + "</annualSalary></person>");
+    }
+
+    @Override
+    public String toJSON() {
+        return super.toJSON().replace("}",
+                ",\"annualSalary\":" + annualSalary + "}");
     }
 }
